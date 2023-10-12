@@ -1,0 +1,26 @@
+{
+  "name": "attendace-system-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsc -w | nodemon dist/index.js",
+    "run": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/postgres": "^5.2.0",
+    "@fastify/type-provider-typebox": "^3.5.0",
+    "@prisma/client": "5.3.1",
+    "@sinclair/typebox": "^0.31.16",
+    "@types/node": "^20.6.4",
+    "fastify": "^4.23.2",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "prisma": "^5.3.1"
+  }
+}

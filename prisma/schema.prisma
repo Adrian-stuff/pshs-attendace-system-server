@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model attendance {
+  id                Int       @id @default(autoincrement())
+  student_id        BigInt
+  attendance_status status?
+  date              DateTime? @default(now()) @db.Timestamp()
+  students          students  @relation(fields: [student_id], references: [lrn], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model gradelevels {
+  grade_level Int        @id
+  grade_name  String     @db.VarChar(255)
+  sections    sections[]
+  students    students[]
+}
+
+model sections {
+  section_id   String      @id @db.VarChar(2)
+  adviser      String?     @db.VarChar(255)
+  room         Int?
+  grade_level  Int
+  section_name String      @db.VarChar(255)
+  gradelevels  gradelevels @relation(fields: [grade_level], references: [grade_level], onDelete: NoAction, onUpdate: NoAction)
+  students     students[]
+}
+
+model students {
+  lrn              BigInt       @id
+  first_name       String       @db.VarChar(255)
+  middle_name      String?      @db.VarChar(255)
+  last_name        String?      @db.VarChar(255)
+  grade_level      Int?
+  sex              String?      @db.VarChar(6)
+  section_id       String?      @db.VarChar(2)
+  guardian_name    String?      @db.VarChar(255)
+  contact_guardian BigInt?
+  address          String?
+  attendance       attendance[]
+  gradelevels      gradelevels? @relation(fields: [grade_level], references: [grade_level], onDelete: NoAction, onUpdate: NoAction)
+  sections         sections?    @relation(fields: [section_id], references: [section_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+enum status {
+  LATE
+  ONTIME
+}
